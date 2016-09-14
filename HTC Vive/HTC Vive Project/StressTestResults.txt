@@ -1,0 +1,15 @@
+With physics calculations
+
+Experiment Type - Enclosed area of 2 x 2 skybox (Unity Scale)
+Remarks: Occulusion Culling is active at time of experiment
+
+55 fps - 1000 spheres
+30 fps - 2.5k spheres (unacceptable)
+10 fps - 3k spheres (unplayable)
+
+Without physics calculations
+
+Experiment Type - Open area of 100 x 100 plane (Unity Scale)
+Remarks: Occulusion Culling is active at time of experiment
+
+55 fps - 1.5k spheres (1.3m vertices max)

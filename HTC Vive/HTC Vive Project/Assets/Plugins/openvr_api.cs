@@ -4009,11 +4009,10 @@ public class OpenVR
 		return OpenVRInterop.IsInterfaceVersionValid(pchInterfaceVersion);
 	}
 
-	public static uint GetInitToken()
-	{
-		return OpenVRInterop.GetInitToken();
-	}
-
+	//public static uint GetInitToken()
+	//{
+		//return OpenVRInterop.GetInitToken();
+	//}
 	public const uint k_unTrackingStringSize = 32;
 	public const uint k_unMaxDriverDebugResponseSize = 32768;
 	public const uint k_unTrackedDeviceIndex_Hmd = 0;
@@ -4187,11 +4186,11 @@ public class OpenVR
 
 		void CheckClear()
 		{
-			if (VRToken != GetInitToken())
-			{
-				Clear();
-				VRToken = GetInitToken();
-			}
+			//if (VRToken != GetInitToken())
+			//{
+			//	Clear();
+			//	VRToken = GetInitToken();
+			//}
 		}
 
 		public CVRSystem VRSystem()
