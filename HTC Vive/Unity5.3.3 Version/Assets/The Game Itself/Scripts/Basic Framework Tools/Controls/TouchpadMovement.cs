@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//you know what is needed for a little more immersion?
-//Touchpad movement
-//WARNING: DO NOT USE THIS IF YOU EXPERIENCE MOTION SICKNESS EASILY
+//=============================================================================
+//
+// Purpose of this script: Allow the player to be able to move in the world space
+//
+// * Trackpad touch: Navigate through the world space based on finger position
+// * Trackpad release: Slows player to a stop if moving
+//
+//=============================================================================
 public class TouchpadMovement : MonoBehaviour 
 {
+    public TouchpadMovementTracking leftController;     //left controller
+    public TouchpadMovementTracking rightController;    //right controller
+
     //to attach the camera rig here
-    public GameObject player;
-    
-    //toggle this to true to enable trackpad movement
-    public bool TrackpadEnabled = true;
+    public Transform player;
 
     //the maximum walking speed of the player
     public float maxWalkSpeed = 2.0f;
@@ -24,22 +29,28 @@ public class TouchpadMovement : MonoBehaviour
     //deceleration or inertia so as to prevent jerking motion from sudden stop
     public float deceleration = 0.1f;
 
-    //finger's position on touchpad
-    Vector2 touchpad;
-
     //the player position in the world space
     private Vector3 playerPos;
 
-    //tracked object, should be a controller
-    SteamVR_TrackedObject trackedObj;
-
-    //find out which device of the controller is used at that point in time
-    SteamVR_Controller.Device device;
-
+    void Awake()
+    {
+        if (player == null)
+        {
+            player = FindObjectOfType<SteamVR_GameView>().transform;
+        }
+        
+    }
 	// Use this for initialization
 	void Start () 
     {
-        trackedObj = GetComponent<SteamVR_TrackedObject>();
+        if (leftController == null)
+        {
+            Debug.Log("Left controller not initialized");
+        }
+        if (rightController == null)
+        {
+            Debug.Log("Right controller not initialized");
+        }
 	}
 
     //calculate the speed
@@ -72,13 +83,30 @@ public class TouchpadMovement : MonoBehaviour
         //the new position
         transform.position = new Vector3(transform.position.x, fixY, transform.position.z);
     }
+
+    void LeftControllerUpdate()
+    {
+        leftController.touchpad = leftController.device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad);
+        CalculateSpeed(ref movementSpeed, leftController.touchpad.y);
+        CalculateSpeed(ref strafeSpeed, leftController.touchpad.x);
+    }
+    void RightControllerUpdate()
+    {
+        rightController.touchpad = rightController.device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad);
+        CalculateSpeed(ref movementSpeed, rightController.touchpad.y);
+        CalculateSpeed(ref strafeSpeed, rightController.touchpad.x);
+    }
     void FixedUpdate()
     {
-        //read the touchpad values here to determine the movement
-        touchpad = device.GetAxis(Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad);
-
-        CalculateSpeed(ref movementSpeed, touchpad.y);
-        CalculateSpeed(ref strafeSpeed, touchpad.x);
+        //ensure that it only updates when the controllers are around and the trackpad tracking is enabled
+        if (leftController.gameObject.activeInHierarchy && leftController.TrackpadEnabled)
+        {
+            LeftControllerUpdate();
+        }
+        if(rightController.gameObject.activeInHierarchy && rightController.TrackpadEnabled)
+        {
+            RightControllerUpdate();
+        }
         Move();
     }
 

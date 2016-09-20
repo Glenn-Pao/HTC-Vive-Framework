@@ -2,7 +2,7 @@
 using System.Collections;
 //=============================================================================
 //
-// Purpose: Allow the player to be able to teleport based on where he is facing
+// Purpose of this script: Allow the player to be able to teleport based on where he is facing
 //
 // * Trackpad press down: project laser pointer from Touch Controller
 // * Trackpad release: teleport player with blink to laser point destination
