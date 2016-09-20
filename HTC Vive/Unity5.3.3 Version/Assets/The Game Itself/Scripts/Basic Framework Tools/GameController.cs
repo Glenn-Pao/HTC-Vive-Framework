@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour
     private SteamVR_TrackedObject trackedController;
     private SteamVR_Controller.Device device;
 
-    HashSet<InteractableItem> objectsHoveringOver = new HashSet<InteractableItem>();
+    //HashSet<InteractableItem> objectsHoveringOver = new HashSet<InteractableItem>();
 
     //private InteractableItem closestItem;       //the closest item to the player
     //private InteractableItem interactingItem;   //the item that is being interacted

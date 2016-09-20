@@ -26,7 +26,7 @@ public class Teleportation : MonoBehaviour
     private Vector3 TeleportLocation;                                   //the teleport location
 
     private SteamVR_TrackedObject trackedController;                    //which controller it is
-    private SteamVR_Controller.Device device;                           //the type of device
+    private SteamVR_Controller.Device device { get { return SteamVR_Controller.Input((int)trackedController.index); } }                           //the type of device
 
     private GameObject pointerHolder;
     private GameObject pointer;
@@ -90,16 +90,13 @@ public class Teleportation : MonoBehaviour
     }
 
     void SetPointerTransform(float setLength, float setThickness)
-    {
-        //let's see what he meant by that
-        float beamPosition = setLength / 2;
-        
-        //if the additional decimal isn't added then the beam position glitches
-        //float beamPosition = setLength / (2 + 0.00001f);
+    {   
+        //a weird glitch popped out, so there is a decimal offset
+        float beamPosition = setLength / (2 + 0.00001f);
 
-        pointer.transform.localScale = new Vector3(setThickness, setThickness, setLength);
-        pointer.transform.localPosition = new Vector3(0f, 0f, beamPosition);
-        pointerTip.transform.localPosition = new Vector3(0f, 0f, setLength - (pointerTip.transform.localScale.z / 2));
+        pointer.transform.localScale = new Vector3(setLength, setThickness, setThickness);
+        pointer.transform.localPosition = new Vector3(beamPosition, 0f, 0f);
+        pointerTip.transform.localPosition = new Vector3(setLength - (pointerTip.transform.localScale.x / 2), 0f, 0f);
 
         TeleportLocation = pointerTip.transform.position;
     }
