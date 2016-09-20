@@ -83,10 +83,19 @@ public class Teleportation : MonoBehaviour
     //this is needed to find the reference point for the pointer to work
     void InitHeadsetReferencePoint()
     {
-        Transform eyeCamera = GameObject.FindObjectOfType<SteamVR_Camera>().GetComponent<Transform>();
-        // The referece point for the camera is two levels up from the SteamVR_Camera
-        HeadsetCameraRig = eyeCamera.parent.parent;
-        HeadsetInitialYPosition = HeadsetCameraRig.transform.position.y;
+        
+        #if(UNITY_5_3)
+                Transform eyeCamera = GameObject.FindObjectOfType<SteamVR_Camera>().GetComponent<Transform>();
+                // The referece point for the camera is two levels up from the SteamVR_Camera
+                HeadsetCameraRig = eyeCamera.parent.parent;
+                HeadsetInitialYPosition = HeadsetCameraRig.transform.position.y;
+        #endif
+        #if(UNITY_5_4)
+                Transform eyeCamera = GameObject.FindObjectOfType<SteamVR_Camera>().GetComponent<Transform>();
+                // The referece point for the camera is two levels up from the SteamVR_Camera
+                HeadsetCameraRig = eyeCamera.parent;
+                HeadsetInitialYPosition = HeadsetCameraRig.transform.position.y;
+        #endif
     }
 
     void SetPointerTransform(float setLength, float setThickness)

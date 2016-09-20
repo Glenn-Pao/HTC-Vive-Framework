@@ -36,7 +36,12 @@ public class TouchpadMovement : MonoBehaviour
     {
         if (player == null)
         {
+            #if (UNITY_5_3)
             player = FindObjectOfType<SteamVR_GameView>().transform;
+            #endif
+            #if(UNITY_5_4)
+            player = FindObjectOfType<SteamVR_Camera>().transform;
+            #endif
         }
         
     }
