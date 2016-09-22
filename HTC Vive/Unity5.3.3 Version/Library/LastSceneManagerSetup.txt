@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/The Game Itself/Scenes/MotionControllerScene.unity
+- path: Assets/The Game Itself/Scenes/SampleScene.unity
   isLoaded: 1
   isActive: 1

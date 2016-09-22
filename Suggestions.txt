@@ -1,0 +1,2 @@
+1) Movement should be done when you hold down the trackpad to avoid unexpected movement.
+2) Consider D-Pad style movement (GUI might be a problem)
